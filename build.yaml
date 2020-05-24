@@ -1,0 +1,15 @@
+targets:
+    $default:
+        builders:
+            auto_factory|auto_factory:
+                enabled: true
+            
+builders:
+    auto_factory:
+        target: ":auto_factory_generator"
+        import: "package:auto_factory/auto_factory.dart"
+        builder_factories: ["autoFactoryProviderBuilder"]
+        build_extensions: {".dart": [".auto_factory.g.part"]}
+        auto_apply: dependents
+        build_to: cache
+        applies_builders: ["source_gen|combining_builder"]
