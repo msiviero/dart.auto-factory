@@ -1,20 +1,24 @@
-import 'package:auto_factory/annotations.dart';
+import 'package:auto_factory_annotation/auto_factory_annotation.dart';
 import 'package:source_gen_test/annotations.dart';
 
 import '_basic_dep.dart';
 
 @ShouldGenerate('''
 class MyComponentFactory {
+  MyComponent instance;
+
   MyComponent get() {
     final dependencyFactory = DependencyFactory();
 
-    return MyComponent(
+    instance ??= MyComponent(
       dependencyFactory.get(),
     );
+
+    return instance;
   }
 }
 ''')
-@AutoFactory()
+@CachingFactory()
 class MyComponent {
   final Dependency _dep;
 

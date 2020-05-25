@@ -1,4 +1,4 @@
-import 'package:auto_factory/annotations.dart';
+import 'package:auto_factory_annotation/auto_factory_annotation.dart';
 
 part 'hello_service.g.dart';
 

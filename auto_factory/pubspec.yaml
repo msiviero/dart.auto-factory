@@ -1,5 +1,5 @@
 name: auto_factory
-description: Compile time factory generator
+description: Compile time factory source generator. For native, web and flutter
 version: 0.1.0-dev.1
 homepage: https://github.com/msiviero/dart.auto-factory
 
@@ -14,6 +14,7 @@ dependencies:
   meta: ^1.1.8
 
 dev_dependencies:
+  auto_factory_annotation: ^0.1.0-dev.1
   build_runner: ^1.9.0
   source_gen_test: ^0.1.1
   pedantic: ^1.8.0

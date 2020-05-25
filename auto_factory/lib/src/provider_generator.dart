@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:auto_factory_annotation/auto_factory_annotation.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-
-import '../annotations.dart';
 
 /// Base class extended by [FactoryGenerator] and [CachingFactoryGenerator]
 abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
