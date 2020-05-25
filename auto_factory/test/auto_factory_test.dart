@@ -16,7 +16,7 @@ Future<void> main() async {
   testAnnotatedElements(
     await initializeLibraryReaderForDirectory(
       path.join('test', 'sources'),
-      '_singleton.dart',
+      '_caching.dart',
     ),
     CachingFactoryGenerator(),
   );
