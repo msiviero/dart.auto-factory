@@ -17,10 +17,12 @@ Then, run ```pub run build_runner build``` to generate the part files.
 
 To make a class part of the dependecy tree annotate the class with the *@Component()* annotation. The library satisfies the dependency by creating a new instance and injecting to the default constructor the required dependencies.
 
-Note that the injection will work only on default constructor with positional arguments.
+Note that the injection will work only on default constructor with positional arguments. See [example](https://github.com/msiviero/dart.auto-factory/tree/master/auto_factory/example) directory.
 
 ```dart
 import 'package:auto_factory/annotations.dart';
+
+part 'myfile.g.dart';
 
 @AutoFactory()
 class Component {
@@ -29,8 +31,8 @@ class Component {
   Component(OtherDependency this.dep);
 }
 
-/// in another program section:
- final component = ComponentFactory().get();
+/// in another file:
+final component = ComponentFactory().get();
 
 component.doSomething();
 ```
