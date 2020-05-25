@@ -1,5 +1,7 @@
 name: auto_factory
-description: Compile time factory source generator. For native, web and flutter
+description: >-
+  Automatically generate code for creating object 
+  and their dependecies throug factory classes
 version: 0.1.0-dev.1
 homepage: https://github.com/msiviero/dart.auto-factory
 

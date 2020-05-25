@@ -1,5 +1,7 @@
 name: auto_factory_annotation
-description: Compile time factory source generator. For native, web and flutter. This is the runtime library
+description: >-
+  Classes that support factory code generation via the
+  `auto_factory` package.
 version: 0.1.0-dev.1
 homepage: https://github.com/msiviero/dart.auto-factory
 
