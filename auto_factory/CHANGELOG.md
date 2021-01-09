@@ -9,3 +9,7 @@
 ## 0.1.1
 
 - Fixed readme example
+
+## 0.1.2
+
+- Update deps to current version
