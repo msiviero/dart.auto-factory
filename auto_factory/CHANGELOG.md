@@ -13,3 +13,7 @@
 ## 0.1.2
 
 - Update deps to current version
+
+## 0.1.3
+
+- Analyzer without specific version
