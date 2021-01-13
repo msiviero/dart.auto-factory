@@ -17,3 +17,7 @@
 ## 0.1.3
 
 - Analyzer without specific version
+
+## 0.1.3
+
+- built_value compatibility
