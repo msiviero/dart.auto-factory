@@ -2,7 +2,7 @@ name: auto_factory
 description: >-
   Automatically generate code for creating object 
   and their dependecies throug factory classes
-version: 0.1.5+2
+version: 0.1.5+3
 homepage: https://github.com/msiviero/dart.auto-factory
 
 environment:
