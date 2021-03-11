@@ -58,7 +58,7 @@ class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
 
         ${element.displayName} get() {
 
-          ${declarations}
+          $declarations
 
           return ${element.displayName}($params);
         }
@@ -86,7 +86,7 @@ class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
         ${element.displayName} instance;
 
         ${element.displayName} get() {
-          ${declarations}
+          $declarations
 
           instance ??= ${element.displayName}(
             $params
