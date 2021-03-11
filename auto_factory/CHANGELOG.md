@@ -29,3 +29,7 @@
 ## 0.1.5+1
 
 - Minor fixes
+
+## 0.1.5+2
+
+- Fixed null-safety issue
