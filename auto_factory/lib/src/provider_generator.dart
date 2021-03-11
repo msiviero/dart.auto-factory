@@ -25,6 +25,7 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
 
       final params =
           ctor.parameters.map((param) => param.type).map(_parameter).join(' ');
+
       return _finalize(element, declarations, params);
     }
     return '';
@@ -98,6 +99,6 @@ class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
 }
 
 String _typeToInstanceName(DartType type) {
-  final typeAsString = type.toString();
+  final typeAsString = type.element.name;
   return typeAsString[0].toLowerCase() + typeAsString.substring(1);
 }
