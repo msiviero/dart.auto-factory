@@ -73,7 +73,7 @@ class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
 class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
   @override
   String _declaration(DartType type) =>
-      'final ${_typeToInstanceName(type)}Factory = ${type}Factory();';
+      'final ${_typeToInstanceName(type)}Factory = ${_typeToString(type)}Factory();';
 
   @override
   String _parameter(DartType type) {
@@ -83,14 +83,14 @@ class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
   @override
   String _finalize(ClassElement element, String declarations, String params) =>
       '''
-      class ${element.displayName}Factory {
+      class ${element.name}Factory {
 
-        ${element.displayName} instance;
+        ${element.name} instance;
 
-        ${element.displayName} get() {
+        ${element.name} get() {
           $declarations
 
-          instance ??= ${element.displayName}(
+          instance ??= ${element.name}(
             $params
           );
 
