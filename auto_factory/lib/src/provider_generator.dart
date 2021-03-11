@@ -6,7 +6,9 @@ import 'package:auto_factory_annotation/auto_factory_annotation.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
-/// Base class extended by [FactoryGenerator] and [CachingFactoryGenerator]
+/* 
+ * Base class extended by [FactoryGenerator] and [CachingFactoryGenerator] 
+ */
 abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
   @override
   FutureOr<String> generateForAnnotatedElement(
@@ -45,7 +47,7 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
 class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
   @override
   String _declaration(DartType type) =>
-      'final ${_typeToInstanceName(type)}Factory = ${type}Factory();';
+      'final ${_typeToInstanceName(type)}Factory = ${_typeToString(type)}Factory();';
 
   @override
   String _parameter(DartType type) =>
@@ -54,13 +56,13 @@ class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
   @override
   String _finalize(ClassElement element, String declarations, String params) =>
       '''
-      class ${element.displayName}Factory {
+      class ${element.name}Factory {
 
-        ${element.displayName} get() {
+        ${element.name} get() {
 
           $declarations
 
-          return ${element.displayName}($params);
+          return ${element.name}($params);
         }
       }
       ''';
@@ -96,6 +98,10 @@ class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
         }
       }
       ''';
+}
+
+String _typeToString(DartType type) {
+  return type.element.name;
 }
 
 String _typeToInstanceName(DartType type) {
