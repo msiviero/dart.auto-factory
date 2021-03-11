@@ -21,3 +21,7 @@
 ## 0.1.4
 
 - built_value compatibility
+
+## 0.1.5
+
+- Update deps
