@@ -25,7 +25,6 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
 
       final params =
           ctor.parameters.map((param) => param.type).map(_parameter).join(' ');
-
       return _finalize(element, declarations, params);
     }
     return '';
