@@ -10,3 +10,7 @@
 
 - Changed annotations names
 - Added providers
+
+## 1.0.0+1
+
+- Better description
