@@ -12,7 +12,7 @@ class Application {
 
   Application(
     this.helloService,
-    @Provided(StringDependencyProvider.provideString) this.aString,
+    @Provided(StringDependencyProvider) this.aString,
   );
 
   void greet() {

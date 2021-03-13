@@ -1,6 +1,5 @@
-Compile ime factories, implmented using [_source_gen_](https://pub.dev/packages/source_gen) package, so that it works in every platform.
+Compile time dependency injection using factories, implmented using [_source_gen_](https://pub.dev/packages/source_gen) package, so that it works in every platform.
 The advantages of this approach are are performance (no reflection needed) and full debuggability, as the generated sources are easy to read and well formatted.
-The development principle is to keep it simple, so only the basics features are implemented.
 
 ## Install
 
@@ -13,7 +12,7 @@ Then, run ```pub run build_runner build``` to generate the part files.
 - [Create a factory](#create-a-factory)
 - [Caching factories](#caching-factories)
 
-## Create a factory
+## Usage
 
 To make a class part of the dependecy tree annotate the class with the *@Component()* annotation. The library satisfies the dependency by creating a new instance and injecting to the default constructor the required dependencies.
 

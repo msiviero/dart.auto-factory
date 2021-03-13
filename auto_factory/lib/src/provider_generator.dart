@@ -32,25 +32,25 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
     return '';
   }
 
-  bool _hasProvidedAnnotation(ParameterElement parameter) =>
-      _providedChecker.hasAnnotationOfExact(parameter);
-
-  String _generateDeclaration(ParameterElement element) => _hasProvidedAnnotation(
-          element)
-      ? ''
-      : 'final ${_typeToInstanceName(element.type)}Factory = ${_typeToString(element.type)}Factory();';
-
-  String _generateParamater(ParameterElement element) {
-    if (_hasProvidedAnnotation(element)) {
-      final MethodElement providerMethod = _providedChecker
+  String _generateDeclaration(ParameterElement element) {
+    if (_providedChecker.hasAnnotationOfExact(element)) {
+      final typeValue = _providedChecker
           .firstAnnotationOfExact(element)
           .getField('provider')
-          .toFunctionValue();
+          .toTypeValue();
+      return 'final ${_typeToInstanceName(typeValue)}Impl = ${_typeToString(typeValue)}Impl();';
+    }
+    return 'final ${_typeToInstanceName(element.type)}Factory = ${_typeToString(element.type)}Factory();';
+  }
 
-      final methodParams =
-          providerMethod.parameters.map(_generateParamater).join(' ');
+  String _generateParamater(ParameterElement element) {
+    if (_providedChecker.hasAnnotationOfExact(element)) {
+      final elementType = _providedChecker
+          .firstAnnotationOfExact(element)
+          .getField('provider')
+          .toTypeValue();
 
-      return 'await ${providerMethod.enclosingElement.name}.${providerMethod.name}($methodParams),';
+      return 'await ${_typeToInstanceName(elementType)}Impl.provide(),';
     }
     return 'await ${_typeToInstanceName(element.type)}Factory.create(),';
   }
@@ -62,8 +62,27 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
   );
 }
 
-/// Generates a factory shared part for classes annotated with [AutoFactory].
+/// Generates a provider implementation for classes annotated with [Provider].
 /// After creating an instance, the method get provides the required type and its dependencies
+class ProviderGenerator extends BaseFactoryGenerator<Provider> {
+  @override
+  String _finalize(ClassElement element, String declarations, String params) =>
+      '''
+      class ${element.name}Impl extends ${element.name} {
+
+        static final ${element.name}Impl _singleton = ${element.name}Impl._internal();
+
+        factory ${element.name}Impl() {
+          return _singleton;
+        }
+
+        ${element.name}Impl._internal(); 
+      }
+      ''';
+}
+
+/// Generates a factory shared part for classes annotated with [AutoFactory].
+/// After creating an instance, the method create provides the required type and its dependencies
 class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
   @override
   String _finalize(ClassElement element, String declarations, String params) =>

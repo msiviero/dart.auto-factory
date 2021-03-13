@@ -9,10 +9,11 @@ part of 'application.dart';
 class ApplicationFactory {
   Future<Application> create() async {
     final helloServiceFactory = HelloServiceFactory();
+    final stringDependencyProviderImpl = StringDependencyProviderImpl();
 
     return Application(
       await helloServiceFactory.create(),
-      await StringDependencyProvider.provideString(),
+      await stringDependencyProviderImpl.provide(),
     );
   }
 }

@@ -24,6 +24,6 @@ class MyComponent {
 
   MyComponent(
     this.dep,
-    @Provided(ThirdDependencyProvider.provideX) this.third,
+    @Provided(ThirdDependencyProvider) this.third,
   );
 }
