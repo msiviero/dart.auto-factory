@@ -9,7 +9,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  auto_factory_annotation: ^0.1.0
+  auto_factory_annotation: #^0.1.0
+    path: ../auto_factory_annotation
   path: ^1.7.0
   build: ^1.3.0
   source_gen: ^0.9.10+3

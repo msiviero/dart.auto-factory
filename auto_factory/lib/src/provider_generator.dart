@@ -10,6 +10,8 @@ import 'package:source_gen/source_gen.dart';
  * Base class extended by [FactoryGenerator] and [CachingFactoryGenerator] 
  */
 abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
+  final TypeChecker _providedChecker = TypeChecker.fromRuntime(Provided);
+
   @override
   FutureOr<String> generateForAnnotatedElement(
     Element element,
@@ -17,24 +19,42 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
     BuildStep buildStep,
   ) {
     if (element is ClassElement) {
-      final ctor =
-          element.constructors.firstWhere((ctor) => ctor.displayName == '');
-
-      final declarations = ctor.parameters
-          .map((param) => param.type)
-          .map(_declaration)
+      final declarations = element.unnamedConstructor.parameters
+          .map(_generateDeclaration)
           .join('\n');
 
-      final params =
-          ctor.parameters.map((param) => param.type).map(_parameter).join(' ');
+      final params = element.unnamedConstructor.parameters
+          .map(_generateParamater)
+          .join(' ');
 
       return _finalize(element, declarations, params);
     }
     return '';
   }
 
-  String _declaration(DartType type);
-  String _parameter(DartType type);
+  bool _hasProvidedAnnotation(ParameterElement parameter) =>
+      _providedChecker.hasAnnotationOfExact(parameter);
+
+  String _generateDeclaration(ParameterElement element) => _hasProvidedAnnotation(
+          element)
+      ? ''
+      : 'final ${_typeToInstanceName(element.type)}Factory = ${_typeToString(element.type)}Factory();';
+
+  String _generateParamater(ParameterElement element) {
+    if (_hasProvidedAnnotation(element)) {
+      final MethodElement providerMethod = _providedChecker
+          .firstAnnotationOfExact(element)
+          .getField('provider')
+          .toFunctionValue();
+
+      final methodParams =
+          providerMethod.parameters.map(_generateParamater).join(' ');
+
+      return 'await ${providerMethod.enclosingElement.name}.${providerMethod.name}($methodParams),';
+    }
+    return 'await ${_typeToInstanceName(element.type)}Factory.create(),';
+  }
+
   String _finalize(
     ClassElement element,
     String declarations,
@@ -46,19 +66,11 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
 /// After creating an instance, the method get provides the required type and its dependencies
 class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
   @override
-  String _declaration(DartType type) =>
-      'final ${_typeToInstanceName(type)}Factory = ${_typeToString(type)}Factory();';
-
-  @override
-  String _parameter(DartType type) =>
-      '${_typeToInstanceName(type)}Factory.get(),';
-
-  @override
   String _finalize(ClassElement element, String declarations, String params) =>
       '''
       class ${element.name}Factory {
 
-        ${element.name} get() {
+        Future<${element.name}> create() async {
 
           $declarations
 
@@ -72,29 +84,29 @@ class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
 /// This is the same as [AutoFactory] but the instance is cached
 class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
   @override
-  String _declaration(DartType type) =>
-      'final ${_typeToInstanceName(type)}Factory = ${_typeToString(type)}Factory();';
-
-  @override
-  String _parameter(DartType type) {
-    return '${_typeToInstanceName(type)}Factory.get(),';
-  }
-
   @override
   String _finalize(ClassElement element, String declarations, String params) =>
       '''
       class ${element.name}Factory {
 
-        ${element.name} instance;
+        static final ${element.name}Factory _singleton = ${element.name}Factory._internal();
 
-        ${element.name} get() {
+        factory ${element.name}Factory() {
+          return _singleton;
+        }
+
+        ${element.name}Factory._internal();
+
+        ${element.name} _objectInstance;
+
+        Future<${element.name}> create() async {
           $declarations
 
-          instance ??= ${element.name}(
+          _objectInstance ??= ${element.name}(
             $params
           );
 
-          return instance;
+          return _objectInstance;
         }
       }
       ''';

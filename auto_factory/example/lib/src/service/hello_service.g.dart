@@ -9,7 +9,7 @@ part of 'hello_service.dart';
 class HelloServiceFactory {
   HelloService instance;
 
-  HelloService get() {
+  Future<HelloService> create() async {
     instance ??= HelloService();
 
     return instance;
