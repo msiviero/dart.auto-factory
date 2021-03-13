@@ -2,23 +2,29 @@ import 'package:auto_factory_annotation/auto_factory_annotation.dart';
 import 'package:source_gen_test/annotations.dart';
 
 import '_basic_dep.dart';
+import '_basic_provider.dart';
+import '_basic_third_dep.dart';
 
 @ShouldGenerate('''
 class MyComponentFactory {
-  MyComponent get() {
+  Future<MyComponent> create() async {
     final dependencyFactory = DependencyFactory();
+    final thirdDependencyProviderFactory = ThirdDependencyProviderFactory();
 
     return MyComponent(
-      dependencyFactory.get(),
+      await dependencyFactory.create(),
+      await (await thirdDependencyProviderFactory.create()).provide(),
     );
   }
 }
 ''')
-@AutoFactory()
+@Injectable()
 class MyComponent {
-  final Dependency _dep;
+  final Dependency dep;
+  final ThirdDependency third;
 
-  MyComponent(Dependency dep) : _dep = dep;
-
-  Dependency get dep => _dep;
+  MyComponent(
+    this.dep,
+    @ProvidedBy(ThirdDependencyProvider) this.third,
+  );
 }

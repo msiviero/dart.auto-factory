@@ -33,3 +33,8 @@
 ## 0.1.5+2 0.1.5+3 0.1.5+4
 
 - Fixed null-safety issue
+
+## 1.0.0
+
+- Changed annotations names
+- Added providers

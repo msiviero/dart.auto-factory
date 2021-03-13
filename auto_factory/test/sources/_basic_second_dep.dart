@@ -3,10 +3,10 @@ import 'package:source_gen_test/annotations.dart';
 
 @ShouldGenerate('''
 class SecondDependencyFactory {
-  SecondDependency get() {
+  Future<SecondDependency> create() async {
     return SecondDependency();
   }
 }
 ''')
-@AutoFactory()
+@Injectable()
 class SecondDependency {}

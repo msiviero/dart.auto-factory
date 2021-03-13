@@ -7,11 +7,13 @@ part of 'application.dart';
 // **************************************************************************
 
 class ApplicationFactory {
-  Application get() {
+  Future<Application> create() async {
     final helloServiceFactory = HelloServiceFactory();
+    final helloServiceProviderFactory = HelloServiceProviderFactory();
 
     return Application(
-      helloServiceFactory.get(),
+      await helloServiceFactory.create(),
+      await (await helloServiceProviderFactory.create()).provide(),
     );
   }
 }

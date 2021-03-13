@@ -7,11 +7,19 @@ part of 'hello_service.dart';
 // **************************************************************************
 
 class HelloServiceFactory {
-  HelloService instance;
+  static final HelloServiceFactory _singleton = HelloServiceFactory._internal();
 
-  HelloService get() {
-    instance ??= HelloService();
+  factory HelloServiceFactory() {
+    return _singleton;
+  }
 
-    return instance;
+  HelloServiceFactory._internal();
+
+  HelloService _objectInstance;
+
+  Future<HelloService> create() async {
+    _objectInstance ??= HelloService();
+
+    return _objectInstance;
   }
 }

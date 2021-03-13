@@ -5,6 +5,10 @@ import './provider_generator.dart';
 
 /// Provider called by build runner
 Builder autoFactoryProviderBuilder(BuilderOptions options) => SharedPartBuilder(
-      [FactoryGenerator(), CachingFactoryGenerator()],
+      [
+        ProviderGenerator(),
+        FactoryGenerator(),
+        CachingFactoryGenerator(),
+      ],
       'auto_factory',
     );

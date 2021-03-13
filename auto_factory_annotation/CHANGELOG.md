@@ -5,3 +5,8 @@
 ## 0.1.0
 
 - First more or less stable implementation
+
+## 1.0.0
+
+- Changed annotations names
+- Added providers

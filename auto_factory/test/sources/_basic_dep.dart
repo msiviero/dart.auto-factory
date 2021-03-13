@@ -5,16 +5,16 @@ import '_basic_second_dep.dart';
 
 @ShouldGenerate('''
 class DependencyFactory {
-  Dependency get() {
+  Future<Dependency> create() async {
     final secondDependencyFactory = SecondDependencyFactory();
 
     return Dependency(
-      secondDependencyFactory.get(),
+      await secondDependencyFactory.create(),
     );
   }
 }
 ''')
-@AutoFactory()
+@Injectable()
 class Dependency {
   SecondDependency secondDependency;
 
