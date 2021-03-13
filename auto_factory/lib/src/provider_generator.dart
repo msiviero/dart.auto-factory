@@ -55,6 +55,15 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
     return 'await ${_typeToInstanceName(element.type)}Factory.create(),';
   }
 
+  String _typeToString(DartType type) {
+    return type.element.name;
+  }
+
+  String _typeToInstanceName(DartType type) {
+    final typeAsString = type.element.name;
+    return typeAsString[0].toLowerCase() + typeAsString.substring(1);
+  }
+
   String _finalize(
     ClassElement element,
     String declarations,
@@ -129,13 +138,4 @@ class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
         }
       }
       ''';
-}
-
-String _typeToString(DartType type) {
-  return type.element.name;
-}
-
-String _typeToInstanceName(DartType type) {
-  final typeAsString = type.element.name;
-  return typeAsString[0].toLowerCase() + typeAsString.substring(1);
 }
