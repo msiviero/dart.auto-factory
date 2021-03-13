@@ -30,13 +30,13 @@ class MyComponentFactory {
   }
 }
 ''')
-@CachingFactory()
+@Singleton()
 class MyComponent {
   final Dependency dep;
   final ThirdDependency third;
 
   MyComponent(
     this.dep,
-    @Provided(ThirdDependencyProvider) this.third,
+    @ProvidedBy(ThirdDependencyProvider) this.third,
   );
 }

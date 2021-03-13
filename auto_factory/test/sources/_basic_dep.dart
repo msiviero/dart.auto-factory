@@ -14,7 +14,7 @@ class DependencyFactory {
   }
 }
 ''')
-@AutoFactory()
+@Injectable()
 class Dependency {
   SecondDependency secondDependency;
 

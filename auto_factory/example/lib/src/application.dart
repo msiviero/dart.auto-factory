@@ -5,18 +5,19 @@ import 'service/hello_service.dart';
 
 part 'application.g.dart';
 
-@AutoFactory()
+@Injectable()
 class Application {
   final HelloService helloService;
   final String providedName;
 
   Application(
     this.helloService,
-    @Provided(StringDependencyProvider) this.providedName,
+    @ProvidedBy(HelloServiceProvider) this.providedName,
   );
 
   void greet() {
     final name = helloService.who('John Doe');
-    print('Hello $name + $providedName');
+    print('Hello $name');
+    print('Hello $providedName');
   }
 }

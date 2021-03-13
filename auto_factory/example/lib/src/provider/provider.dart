@@ -1,17 +1,22 @@
 import 'package:auto_factory_annotation/auto_factory_annotation.dart';
 
 import '../service/hello_service.dart';
+import 'name_provider.dart';
 
 part 'provider.g.dart';
 
 @Provider()
-class StringDependencyProvider implements ProviderBase<String> {
+class HelloServiceProvider implements ProviderBase<String> {
   final HelloService helloService;
+  final String who;
 
-  StringDependencyProvider(this.helloService);
+  HelloServiceProvider(
+    this.helloService,
+    @ProvidedBy(NameProvider) this.who,
+  );
 
   @override
   Future<String> provide() async {
-    return helloService.who('Provided Name');
+    return helloService.who(who);
   }
 }

@@ -1,13 +1,13 @@
 import 'dart:async';
 
 /// Builds a factory shared part and so makes class injectable
-class AutoFactory {
-  const AutoFactory();
+class Injectable {
+  const Injectable();
 }
 
 /// Same as Component(), but the class instance is cached
-class CachingFactory {
-  const CachingFactory();
+class Singleton {
+  const Singleton();
 }
 
 /// Creates a provier. should implement the ProviderBase<T> abstract class
@@ -16,12 +16,10 @@ class Provider {
 }
 
 abstract class ProviderBase<T> {
-  Future<T> provide();
+  FutureOr<T> provide();
 }
 
-class Provided {
+class ProvidedBy {
   final Type provider;
-  const Provided(this.provider);
+  const ProvidedBy(this.provider);
 }
-
-typedef ProviderFn = FutureOr<Object> Function();

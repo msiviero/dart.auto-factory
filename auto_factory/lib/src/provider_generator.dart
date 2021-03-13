@@ -10,7 +10,7 @@ import 'package:source_gen/source_gen.dart';
  * Base class extended by [FactoryGenerator] and [CachingFactoryGenerator] 
  */
 abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
-  final TypeChecker _providedChecker = TypeChecker.fromRuntime(Provided);
+  final TypeChecker _providedChecker = TypeChecker.fromRuntime(ProvidedBy);
 
   @override
   FutureOr<String> generateForAnnotatedElement(
@@ -101,9 +101,9 @@ class ProviderGenerator extends BaseFactoryGenerator<Provider> {
       ''';
 }
 
-/// Generates a factory shared part for classes annotated with [AutoFactory].
+/// Generates a factory shared part for classes annotated with [Injectable].
 /// After creating an instance, the method create provides the required type and its dependencies
-class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
+class FactoryGenerator extends BaseFactoryGenerator<Injectable> {
   @override
   String _finalize(ClassElement element, String declarations, String params) =>
       '''
@@ -119,9 +119,9 @@ class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
       ''';
 }
 
-/// Generates a caching factory shared part for classes annotated with [CachingFactory].
-/// This is the same as [AutoFactory] but the instance is cached
-class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
+/// Generates a caching factory shared part for classes annotated with [Singleton].
+/// This is the same as [Injectable] but the instance is cached
+class CachingFactoryGenerator extends BaseFactoryGenerator<Singleton> {
   @override
   String _finalize(ClassElement element, String declarations, String params) =>
       '''

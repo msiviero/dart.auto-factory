@@ -2,7 +2,7 @@ name: auto_factory_annotation
 description: >-
   Classes that support factory code generation via the
   `auto_factory` package.
-version: 0.2.0
+version: 1.0.0
 homepage: https://github.com/msiviero/dart.auto-factory
 
 environment:
