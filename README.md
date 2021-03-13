@@ -17,7 +17,7 @@ Then, run ```pub run build_runner build``` to generate the part files.
 
 ## Basic usage
 
-To make a class part of the dependecy tree annotate the class with the *@Component()* annotation. The library satisfies the dependency by creating a new instance and injecting to the default constructor the required dependencies.
+To make a class part of the dependecy tree annotate the class with the *@Injectable()* annotation. The library satisfies the dependency by creating a new instance and injecting to the default constructor the required dependencies.
 
 Note that the injection will work only on default constructor with positional arguments. See [example](https://github.com/msiviero/dart.auto-factory/tree/master/auto_factory/example) directory.
 
@@ -26,7 +26,7 @@ import 'package:auto_factory_annotation/auto_factory_annotation.dart';
 
 part 'myfile.g.dart';
 
-@Component()
+@Injectable()
 class Component {
   final OtherDependency dep;
 
@@ -46,6 +46,28 @@ component.doSomething();
 
 Using the *@Singleton()* annotation has the same effect as *@Component()*
 except that the instance is only created the first time. Then the same instance is returned every time
+
+```dart
+import 'package:auto_factory_annotation/auto_factory_annotation.dart';
+
+part 'myfile.g.dart';
+
+@Singleton()
+class Component {
+  final OtherDependency dep;
+
+  Component(OtherDependency this.dep);
+
+  void doSomething() {
+    //...
+  }
+}
+
+/// in another file:
+final component = ComponentFactory().create();
+
+component.doSomething();
+```
 
 ## Providers
 
