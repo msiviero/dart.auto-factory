@@ -33,14 +33,14 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
   }
 
   String _generateDeclaration(ParameterElement element) {
-    if (_providedChecker.hasAnnotationOfExact(element)) {
-      final typeValue = _providedChecker
-          .firstAnnotationOfExact(element)
-          .getField('provider')
-          .toTypeValue();
-      return 'final ${_typeToInstanceName(typeValue)}Impl = ${_typeToString(typeValue)}Impl();';
-    }
-    return 'final ${_typeToInstanceName(element.type)}Factory = ${_typeToString(element.type)}Factory();';
+    final neededType = _providedChecker.hasAnnotationOfExact(element)
+        ? _providedChecker
+            .firstAnnotationOfExact(element)
+            .getField('provider')
+            .toTypeValue()
+        : element.type;
+
+    return 'final ${_typeToInstanceName(neededType)}Factory = ${_typeToString(neededType)}Factory();';
   }
 
   String _generateParamater(ParameterElement element) {
@@ -49,8 +49,7 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
           .firstAnnotationOfExact(element)
           .getField('provider')
           .toTypeValue();
-
-      return 'await ${_typeToInstanceName(elementType)}Impl.provide(),';
+      return 'await (await ${_typeToInstanceName(elementType)}Factory.create()).provide(),';
     }
     return 'await ${_typeToInstanceName(element.type)}Factory.create(),';
   }
@@ -77,15 +76,27 @@ class ProviderGenerator extends BaseFactoryGenerator<Provider> {
   @override
   String _finalize(ClassElement element, String declarations, String params) =>
       '''
-      class ${element.name}Impl extends ${element.name} {
+      class ${element.name}Factory {
 
-        static final ${element.name}Impl _singleton = ${element.name}Impl._internal();
+        static final ${element.name}Factory _singleton = ${element.name}Factory._internal();
 
-        factory ${element.name}Impl() {
+        factory ${element.name}Factory() {
           return _singleton;
         }
 
-        ${element.name}Impl._internal(); 
+        ${element.name}Factory._internal();
+
+        ${element.name} _objectInstance;
+
+        Future<${element.name}> create() async {
+          $declarations
+
+          _objectInstance ??= ${element.name}(
+            $params
+          );
+
+          return _objectInstance;
+        }
       }
       ''';
 }
@@ -111,7 +122,6 @@ class FactoryGenerator extends BaseFactoryGenerator<AutoFactory> {
 /// Generates a caching factory shared part for classes annotated with [CachingFactory].
 /// This is the same as [AutoFactory] but the instance is cached
 class CachingFactoryGenerator extends BaseFactoryGenerator<CachingFactory> {
-  @override
   @override
   String _finalize(ClassElement element, String declarations, String params) =>
       '''

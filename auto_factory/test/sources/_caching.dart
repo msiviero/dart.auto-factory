@@ -19,10 +19,11 @@ class MyComponentFactory {
 
   Future<MyComponent> create() async {
     final dependencyFactory = DependencyFactory();
+    final thirdDependencyProviderFactory = ThirdDependencyProviderFactory();
 
     _objectInstance ??= MyComponent(
       await dependencyFactory.create(),
-      await ThirdDependencyProvider.provideX(),
+      await (await thirdDependencyProviderFactory.create()).provide(),
     );
 
     return _objectInstance;

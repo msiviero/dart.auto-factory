@@ -8,16 +8,15 @@ part 'application.g.dart';
 @AutoFactory()
 class Application {
   final HelloService helloService;
-  final String aString;
+  final String providedName;
 
   Application(
     this.helloService,
-    @Provided(StringDependencyProvider) this.aString,
+    @Provided(StringDependencyProvider) this.providedName,
   );
 
   void greet() {
     final name = helloService.who('John Doe');
-    print('Hello $name');
-    print('A string $aString');
+    print('Hello $name + $providedName');
   }
 }

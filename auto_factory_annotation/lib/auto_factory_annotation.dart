@@ -10,12 +10,12 @@ class CachingFactory {
   const CachingFactory();
 }
 
-/// Creates a provier. should implement the ProviderInterface<T> abstract class
+/// Creates a provier. should implement the ProviderBase<T> abstract class
 class Provider {
   const Provider();
 }
 
-abstract class ProviderInterface<T> {
+abstract class ProviderBase<T> {
   Future<T> provide();
 }
 

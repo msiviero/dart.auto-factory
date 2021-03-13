@@ -6,13 +6,25 @@ part of 'provider.dart';
 // ProviderGenerator
 // **************************************************************************
 
-class StringDependencyProviderImpl extends StringDependencyProvider {
-  static final StringDependencyProviderImpl _singleton =
-      StringDependencyProviderImpl._internal();
+class StringDependencyProviderFactory {
+  static final StringDependencyProviderFactory _singleton =
+      StringDependencyProviderFactory._internal();
 
-  factory StringDependencyProviderImpl() {
+  factory StringDependencyProviderFactory() {
     return _singleton;
   }
 
-  StringDependencyProviderImpl._internal();
+  StringDependencyProviderFactory._internal();
+
+  StringDependencyProvider _objectInstance;
+
+  Future<StringDependencyProvider> create() async {
+    final helloServiceFactory = HelloServiceFactory();
+
+    _objectInstance ??= StringDependencyProvider(
+      await helloServiceFactory.create(),
+    );
+
+    return _objectInstance;
+  }
 }
