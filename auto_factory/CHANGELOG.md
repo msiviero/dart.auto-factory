@@ -43,6 +43,6 @@
 
 - Better description
 
-## 1.0.0+2
+## 1.0.0+2 1.0.0+3
 
-- More flexible analyzer deps
+- More flexible analyzer and source gen deps
