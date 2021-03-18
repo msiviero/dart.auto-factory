@@ -42,3 +42,7 @@
 ## 1.0.0+1
 
 - Better description
+
+## 1.0.0+2
+
+- More flexible analyzer deps
