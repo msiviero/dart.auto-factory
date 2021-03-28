@@ -4,7 +4,7 @@ part 'hello_service.g.dart';
 
 @Singleton()
 class HelloService {
-  String who(String name) {
+  String who(String? name) {
     return name ?? 'World';
   }
 }

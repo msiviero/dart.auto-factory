@@ -14,3 +14,7 @@
 ## 1.0.0+1
 
 - Better description
+
+## 1.1.0
+
+- null safety

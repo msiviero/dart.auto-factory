@@ -46,3 +46,7 @@
 ## 1.0.0+2 1.0.0+3
 
 - More flexible analyzer and source gen deps
+
+## 1.1.0
+
+- Sound null safety

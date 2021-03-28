@@ -19,11 +19,11 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
     BuildStep buildStep,
   ) {
     if (element is ClassElement) {
-      final declarations = element.unnamedConstructor.parameters
+      final declarations = element.unnamedConstructor!.parameters
           .map(_generateDeclaration)
           .join('\n');
 
-      final params = element.unnamedConstructor.parameters
+      final params = element.unnamedConstructor!.parameters
           .map(_generateParamater)
           .join(' ');
 
@@ -35,32 +35,32 @@ abstract class BaseFactoryGenerator<T> extends GeneratorForAnnotation<T> {
   String _generateDeclaration(ParameterElement element) {
     final neededType = _providedChecker.hasAnnotationOfExact(element)
         ? _providedChecker
-            .firstAnnotationOfExact(element)
-            .getField('provider')
+            .firstAnnotationOfExact(element)!
+            .getField('provider')!
             .toTypeValue()
         : element.type;
 
-    return 'final ${_typeToInstanceName(neededType)}Factory = ${_typeToString(neededType)}Factory();';
+    return 'final ${_typeToInstanceName(neededType!)}Factory = ${_typeToString(neededType)}Factory();';
   }
 
   String _generateParamater(ParameterElement element) {
     if (_providedChecker.hasAnnotationOfExact(element)) {
       final elementType = _providedChecker
-          .firstAnnotationOfExact(element)
-          .getField('provider')
+          .firstAnnotationOfExact(element)!
+          .getField('provider')!
           .toTypeValue();
-      return 'await (await ${_typeToInstanceName(elementType)}Factory.create()).provide(),';
+      return 'await (await ${_typeToInstanceName(elementType!)}Factory.create()).provide(),';
     }
     return 'await ${_typeToInstanceName(element.type)}Factory.create(),';
   }
 
-  String _typeToString(DartType type) {
-    return type.element.name;
+  String? _typeToString(DartType type) {
+    return type.element!.name;
   }
 
   String _typeToInstanceName(DartType type) {
-    final typeAsString = type.element.name;
-    return typeAsString[0].toLowerCase() + typeAsString.substring(1);
+    final typeAsString = type.element!.name;
+    return typeAsString![0].toLowerCase() + typeAsString.substring(1);
   }
 
   String _finalize(
@@ -86,7 +86,7 @@ class ProviderGenerator extends BaseFactoryGenerator<Provider> {
 
         ${element.name}Factory._internal();
 
-        ${element.name} _objectInstance;
+        ${element.name}? _objectInstance;
 
         Future<${element.name}> create() async {
           $declarations
@@ -95,7 +95,7 @@ class ProviderGenerator extends BaseFactoryGenerator<Provider> {
             $params
           );
 
-          return _objectInstance;
+          return _objectInstance!;
         }
       }
       ''';
@@ -135,7 +135,7 @@ class CachingFactoryGenerator extends BaseFactoryGenerator<Singleton> {
 
         ${element.name}Factory._internal();
 
-        ${element.name} _objectInstance;
+        ${element.name}? _objectInstance;
 
         Future<${element.name}> create() async {
           $declarations
@@ -144,7 +144,7 @@ class CachingFactoryGenerator extends BaseFactoryGenerator<Singleton> {
             $params
           );
 
-          return _objectInstance;
+          return _objectInstance!;
         }
       }
       ''';

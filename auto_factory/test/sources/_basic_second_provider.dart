@@ -14,14 +14,14 @@ class FifthDepProviderFactory {
 
   FifthDepProviderFactory._internal();
 
-  FifthDepProvider _objectInstance;
+  FifthDepProvider _objectInstance?;
 
   Future<FifthDepProvider> create() async {
 
     _objectInstance ??= FifthDepProvider(
     );
 
-    return _objectInstance;
+    return _objectInstance!;
   }
 }
 ''')

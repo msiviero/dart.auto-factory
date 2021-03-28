@@ -17,14 +17,14 @@ class ThirdDependencyProviderFactory {
 
   ThirdDependencyProviderFactory._internal();
 
-  ThirdDependencyProvider _objectInstance;
+  ThirdDependencyProvider _objectInstance?;
 
   Future<ThirdDependencyProvider> create() async {
 
     _objectInstance ??= ThirdDependencyProvider(
     );
 
-    return _objectInstance;
+    return _objectInstance!;
   }
 }
 ''')

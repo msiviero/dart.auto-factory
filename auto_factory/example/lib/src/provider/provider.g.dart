@@ -16,7 +16,7 @@ class HelloServiceProviderFactory {
 
   HelloServiceProviderFactory._internal();
 
-  HelloServiceProvider _objectInstance;
+  HelloServiceProvider? _objectInstance;
 
   Future<HelloServiceProvider> create() async {
     final helloServiceFactory = HelloServiceFactory();
@@ -27,6 +27,6 @@ class HelloServiceProviderFactory {
       await (await nameProviderFactory.create()).provide(),
     );
 
-    return _objectInstance;
+    return _objectInstance!;
   }
 }

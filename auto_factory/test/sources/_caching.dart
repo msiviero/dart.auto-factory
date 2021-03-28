@@ -15,7 +15,7 @@ class MyComponentFactory {
 
   MyComponentFactory._internal();
 
-  MyComponent _objectInstance;
+  MyComponent? _objectInstance;
 
   Future<MyComponent> create() async {
     final dependencyFactory = DependencyFactory();
@@ -26,7 +26,7 @@ class MyComponentFactory {
       await (await thirdDependencyProviderFactory.create()).provide(),
     );
 
-    return _objectInstance;
+    return _objectInstance!;
   }
 }
 ''')

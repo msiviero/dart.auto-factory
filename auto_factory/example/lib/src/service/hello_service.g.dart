@@ -15,11 +15,11 @@ class HelloServiceFactory {
 
   HelloServiceFactory._internal();
 
-  HelloService _objectInstance;
+  HelloService? _objectInstance;
 
   Future<HelloService> create() async {
     _objectInstance ??= HelloService();
 
-    return _objectInstance;
+    return _objectInstance!;
   }
 }

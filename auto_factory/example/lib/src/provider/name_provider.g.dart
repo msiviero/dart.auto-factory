@@ -15,11 +15,11 @@ class NameProviderFactory {
 
   NameProviderFactory._internal();
 
-  NameProvider _objectInstance;
+  NameProvider? _objectInstance;
 
   Future<NameProvider> create() async {
     _objectInstance ??= NameProvider();
 
-    return _objectInstance;
+    return _objectInstance!;
   }
 }
