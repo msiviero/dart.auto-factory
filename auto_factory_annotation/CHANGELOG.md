@@ -18,3 +18,7 @@
 ## 1.1.0
 
 - null safety
+
+## 2.0.0
+
+- null safety
