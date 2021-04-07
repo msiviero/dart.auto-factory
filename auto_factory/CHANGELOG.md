@@ -54,3 +54,7 @@
 ## 2.0.0+1
 
 - Fixed dep
+
+## 2.1.1
+
+- Async mode implementation

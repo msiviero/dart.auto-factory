@@ -13,6 +13,7 @@ Then, run ```pub run build_runner build``` to generate the part files.
 - [Basic usage](#basic-usage)
 - [Singletons](#singletons)
 - [Providers](#providers)
+- [Async Mode](#async-mode)
 - [Example](#example)
 
 ## Basic usage
@@ -83,7 +84,7 @@ part 'myfile.g.dart';
 class IpProvider extends ProviderBase<String> {
 
   @override
-  FutureOr<String> provide() {
+  String provide() {
     return '127.0.0.1';
   }
 }
@@ -128,11 +129,56 @@ class IpProvider extends ProviderBase<String> {
   IpProvider(this.config);
 
   @override
-  FutureOr<String> provide() {
+  String provide() {
     return this.config ? '127.0.0.1' : '11.22.33.44';
   }
 }
 ```
+
+## Async mode
+
+Sometimes you need to do some async work inside provider's method.
+In this case you can add the parameter  *asyncMode = true* to the annotations.
+In this case the factory *create()* method will be asynchronous.
+
+*Please note that the dependency three should be consistently async or not in order to work*
+
+```dart
+import 'package:auto_factory_annotation/auto_factory_annotation.dart';
+
+part 'myfile.g.dart';
+
+@Provider(asyncMode=true)
+class IpProvider extends ProviderBase<String> {
+
+  final Config config;
+
+  IpProvider(this.config);
+
+  @override
+  Future<String> provide() async {
+    return this.config ? '127.0.0.1' : '11.22.33.44';
+  }
+}
+
+@Component(asyncMode=true)
+class Component {
+  final String ip;
+
+  Component(@ProvidedBy(IpProvider) String this.ip);
+
+  void doSomething() {
+    //...
+  }
+}
+
+/// in another file:
+final component = await ComponentFactory().create();
+
+component.doSomething();
+```
+
+
 
 ## Example
 

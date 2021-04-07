@@ -14,7 +14,7 @@ class DependencyFactory {
   }
 }
 ''')
-@Injectable()
+@Injectable(asyncMode: true)
 class Dependency {
   SecondDependency secondDependency;
 
