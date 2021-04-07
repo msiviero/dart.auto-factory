@@ -18,10 +18,12 @@ class Provider {
   const Provider({this.asyncMode = false});
 }
 
+/// Should be implemented by every provider concrete class
 abstract class ProviderBase<T> {
   FutureOr<T> provide();
 }
 
+/// Marks that a is provided by a provider, specifying the type
 class ProvidedBy {
   final Type provider;
   const ProvidedBy(this.provider);

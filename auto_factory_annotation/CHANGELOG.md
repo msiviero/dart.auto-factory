@@ -28,6 +28,6 @@
 - Added example
 
 
-## 2.1.0 2.1.1
+## 2.1.0 2.1.1 2.1.1+1
 
 - Added sync / async choiche
