@@ -58,3 +58,7 @@
 ## 2.1.1
 
 - Async mode implementation
+
+## 2.2.1
+
+- Updated deps and linter rules
