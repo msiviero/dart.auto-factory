@@ -7,6 +7,4 @@ homepage: https://github.com/msiviero/dart.auto-factory
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
-
-dev_dependencies:
-  pedantic: ^1.11.0
+  
