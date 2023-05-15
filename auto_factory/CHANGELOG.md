@@ -62,3 +62,7 @@
 ## 2.2.1
 
 - Updated deps and linter rules
+
+## 2.3.0
+
+- Updated packages
