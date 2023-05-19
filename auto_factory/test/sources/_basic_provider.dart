@@ -28,7 +28,7 @@ class ThirdDependencyProviderFactory {
   }
 }
 ''')
-@Provider(asyncMode: true)
+@Provider()
 class ThirdDependencyProvider implements ProviderBase<ThirdDependency> {
   final FourthDep fourthDep;
   final FifthDep fifthDep;

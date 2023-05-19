@@ -8,5 +8,5 @@ class DependencyFactory {
   }
 }
 ''')
-@Injectable(asyncMode: false)
+@Injectable()
 class Dependency {}

@@ -25,7 +25,7 @@ class FifthDepProviderFactory {
   }
 }
 ''')
-@Provider(asyncMode: true)
+@Provider()
 class FifthDepProvider implements ProviderBase<FifthDep> {
   @override
   Future<FifthDep> provide() async {

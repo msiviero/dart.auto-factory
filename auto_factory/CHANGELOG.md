@@ -66,3 +66,7 @@
 ## 2.3.0
 
 - Updated packages
+
+## 3.0.0
+
+- Only async mode

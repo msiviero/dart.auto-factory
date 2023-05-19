@@ -17,7 +17,7 @@ class MyComponentFactory {
   }
 }
 ''')
-@Injectable(asyncMode: false)
+@Injectable()
 class MyComponent {
   final Dependency dep;
   final String third;

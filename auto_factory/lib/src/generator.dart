@@ -34,28 +34,14 @@ class GeneratorUtils {
     return 'final ${instanceName}Factory = ${typeName}Factory();';
   }
 
-  static String generateParameter(
-    ParameterElement element,
-    bool asyncMode,
-  ) {
+  static String generateParameter(ParameterElement element) {
     final type = GeneratorUtils.computeParameterType(element);
     final instanceName = GeneratorUtils.typeInstance(type);
 
-    if (asyncMode) {
-      return hasProvidedByAnnotation(element)
-          ? 'await (await ${instanceName}Factory.create()).provide(),'
-          : 'await ${instanceName}Factory.create(),';
-    } else {
-      return hasProvidedByAnnotation(element)
-          ? '${instanceName}Factory.create().provide(),'
-          : '${instanceName}Factory.create(),';
-    }
+    return hasProvidedByAnnotation(element)
+        ? 'await (await ${instanceName}Factory.create()).provide(),'
+        : 'await ${instanceName}Factory.create(),';
   }
-
-  static String returnType(String name, bool asyncMode) =>
-      asyncMode ? 'Future<$name>' : name;
-
-  static String asyncModifier(bool asyncMode) => asyncMode ? 'async' : '';
 }
 
 /// Generates a factory shared part for classes annotated with [Injectable].
@@ -71,14 +57,12 @@ class InjectableGenerator extends GeneratorForAnnotation<Injectable> {
       return '';
     }
 
-    final asyncMode = annotation.read('asyncMode').boolValue;
-
     final declarations = element.unnamedConstructor!.parameters
         .map(GeneratorUtils.generateDeclaration)
         .join('\n');
 
     final params = element.unnamedConstructor!.parameters
-        .map((it) => GeneratorUtils.generateParameter(it, asyncMode))
+        .map((it) => GeneratorUtils.generateParameter(it))
         .join('\n');
 
     final name = element.name;
@@ -86,7 +70,7 @@ class InjectableGenerator extends GeneratorForAnnotation<Injectable> {
     return '''
       class ${name}Factory {
 
-        ${GeneratorUtils.returnType(name, asyncMode)} create() ${GeneratorUtils.asyncModifier(asyncMode)} {
+        Future<$name> create() async {
 
           $declarations
 
@@ -109,14 +93,13 @@ class SingletonFactoryGenerator extends GeneratorForAnnotation<Singleton> {
     if (element is! ClassElement) {
       return '';
     }
-    final asyncMode = annotation.read('asyncMode').boolValue;
 
     final declarations = element.unnamedConstructor!.parameters
         .map(GeneratorUtils.generateDeclaration)
         .join('\n');
 
     final params = element.unnamedConstructor!.parameters
-        .map((it) => GeneratorUtils.generateParameter(it, asyncMode))
+        .map((it) => GeneratorUtils.generateParameter(it))
         .join('\n');
 
     final name = element.name;
@@ -134,7 +117,7 @@ class SingletonFactoryGenerator extends GeneratorForAnnotation<Singleton> {
 
         $name? _objectInstance;
 
-        ${GeneratorUtils.returnType(name, asyncMode)} create() ${GeneratorUtils.asyncModifier(asyncMode)} {
+        Future<$name> create() async {
           $declarations
 
           _objectInstance ??= $name(
@@ -160,14 +143,13 @@ class ProviderGenerator extends GeneratorForAnnotation<Provider> {
     if (element is! ClassElement) {
       return '';
     }
-    final asyncMode = annotation.read('asyncMode').boolValue;
 
     final declarations = element.unnamedConstructor!.parameters
         .map(GeneratorUtils.generateDeclaration)
         .join('\n');
 
     final params = element.unnamedConstructor!.parameters
-        .map((it) => GeneratorUtils.generateParameter(it, asyncMode))
+        .map((it) => GeneratorUtils.generateParameter(it))
         .join('\n');
 
     final name = element.name;
@@ -185,7 +167,7 @@ class ProviderGenerator extends GeneratorForAnnotation<Provider> {
 
         $name? _objectInstance;
 
-        ${GeneratorUtils.returnType(name, asyncMode)} create() ${GeneratorUtils.asyncModifier(asyncMode)} {
+        Future<$name> create() async {
           $declarations
 
           _objectInstance ??= $name(

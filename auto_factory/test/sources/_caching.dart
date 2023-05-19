@@ -30,7 +30,7 @@ class MyComponentFactory {
   }
 }
 ''')
-@Singleton(asyncMode: true)
+@Singleton()
 class MyComponent {
   final Dependency dep;
   final ThirdDependency third;

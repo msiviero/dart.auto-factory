@@ -5,7 +5,7 @@ import 'name_provider.dart';
 
 part 'provider.g.dart';
 
-@Provider(asyncMode: true)
+@Provider()
 class HelloServiceProvider implements ProviderBase<String> {
   final HelloService helloService;
   final String who;

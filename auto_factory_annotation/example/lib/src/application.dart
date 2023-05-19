@@ -5,7 +5,7 @@ import 'service/hello_service.dart';
 
 part 'application.g.dart';
 
-@Injectable(asyncMode: true)
+@Injectable()
 class Application {
   final HelloService helloService;
   final String providedName;

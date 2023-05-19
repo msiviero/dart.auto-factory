@@ -35,3 +35,11 @@
 ## 2.2.0
 
 - Upgrade packages
+
+## 3.0.0
+
+- Only async mode
+
+## 3.0.1
+
+- Fixed interface signature
