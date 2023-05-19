@@ -4,7 +4,7 @@ The advantages of this approach are are performance (no reflection needed) and f
 ## Install
 
 To use this package, add ```auto_factory``` and ```build_runner``` in the *dev_dependencies* section 
-and the ```auto_factory``` package in the *dependencies* section of your pubspec.yaml file.
+and the ```auto_factory_annotation``` package in the *dependencies* section of your pubspec.yaml file.
 
 Then, run ```pub run build_runner build``` to generate the part files.
 
@@ -38,7 +38,7 @@ class Component {
 }
 
 /// in another file:
-final component = ComponentFactory().create();
+final component = await ComponentFactory().create();
 
 component.doSomething();
 ```
@@ -64,7 +64,7 @@ class Component {
 }
 
 /// in another file:
-final component = ComponentFactory().create();
+final component = await ComponentFactory().create();
 
 component.doSomething();
 ```
@@ -83,7 +83,7 @@ part 'myfile.g.dart';
 class IpProvider extends ProviderBase<String> {
 
   @override
-  FutureOr<String> provide() {
+  Future<String> provide() async {
     return '127.0.0.1';
   }
 }
@@ -108,7 +108,7 @@ class Component {
 }
 
 /// in another file:
-final component = ComponentFactory().create();
+final component = await ComponentFactory().create();
 
 component.doSomething();
 ```
@@ -128,7 +128,7 @@ class IpProvider extends ProviderBase<String> {
   IpProvider(this.config);
 
   @override
-  FutureOr<String> provide() {
+  Future<String> provide() async {
     return this.config ? '127.0.0.1' : '11.22.33.44';
   }
 }
