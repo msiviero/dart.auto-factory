@@ -4,23 +4,7 @@ import 'package:source_gen_test/source_gen_test.dart';
 
 Future<void> main() async {
   initializeBuildLogTracking();
-/*
-  testAnnotatedElements(
-    await initializeLibraryReaderForDirectory(
-      path.join('test', 'sources'),
-      '_basic.dart',
-    ),
-    InjectableGenerator(),
-  );
 
-  testAnnotatedElements(
-    await initializeLibraryReaderForDirectory(
-      path.join('test', 'sources'),
-      '_caching.dart',
-    ),
-    SingletonFactoryGenerator(),
-  );
-*/
   testAnnotatedElements(
     await initializeLibraryReaderForDirectory(
       path.join('test', 'sources'),

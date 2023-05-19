@@ -6,13 +6,13 @@ import '_sync_provider.dart';
 
 @ShouldGenerate('''
 class MyComponentFactory {
-  MyComponent create() {
+  Future<MyComponent> create() async {
     final dependencyFactory = DependencyFactory();
     final thirdDependencyProviderFactory = ThirdDependencyProviderFactory();
 
     return MyComponent(
-      dependencyFactory.create(),
-      thirdDependencyProviderFactory.create().provide(),
+      await dependencyFactory.create(),
+      await (await thirdDependencyProviderFactory.create()).provide(),
     );
   }
 }
