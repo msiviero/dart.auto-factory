@@ -2,7 +2,7 @@ name: auto_factory_annotation
 description: >-
   Automatically generate code for creating objects 
   and their dependecies through factory classes. This is the annotation part
-version: 3.0.0+1
+version: 3.0.1
 homepage: https://github.com/msiviero/dart.auto-factory
 
 environment:
