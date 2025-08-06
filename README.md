@@ -1,5 +1,5 @@
 Compile time dependency injection using factories, implmented using [_source_gen_](https://pub.dev/packages/source_gen) package, so that it works in every platform.
-The advantages of this approach are are performance (no reflection needed) and full debuggability, as the generated sources are easy to read and well formatted.
+The advantages of this approach are performance (no reflection needed) and full debuggability, as the generated sources are easy to read and well formatted.
 
 ## Install
 
